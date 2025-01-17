@@ -6,6 +6,9 @@ set RBTRAY_PATH=C:\Users\ziyad\Desktop\wifi-connexion\RBtray\64bit\RBTray.exe
 REM Charger les variables d'environnement à partir du fichier .env
 for /f "tokens=1,2 delims==" %%i in (C:\Users\ziyad\Desktop\wifi-connexion\.env) do set %%i=%%j
 
+REM Charger le nom d'utilisateur à partir du fichier .env
+for /f "tokens=1,2 delims==" %%i in (C:\Users\ziyad\Desktop\wifi-connexion\.env) do if "%%i"=="USERNAME" set USERNAME=%%j
+
 REM Lancer RBTray pour permettre la minimisation dans la zone de notification
 start "" "%RBTRAY_PATH%"
 

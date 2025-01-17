@@ -9,7 +9,7 @@ Ce projet automatise la connexion à un réseau WiFi en utilisant Selenium pour 
 - Connexion automatique au réseau WiFi en utilisant les informations d'identification fournies.
 - Vérification continue de l'URL pour détecter les redirections vers une page spécifique.
 - Minimisation de la fenêtre de commande dans la zone de notification.
-- Utilisation d'un fichier `.env` pour stocker les informations sensibles (URL et mot de passe).
+- Utilisation d'un fichier `.env` pour stocker les informations sensibles (URL, nom d'utilisateur et mot de passe).
 
 ## Prérequis
 

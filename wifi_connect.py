@@ -11,8 +11,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def connect_to_wifi():
-    # Get the URL and password from environment variables
+    # Get the URL, username, and password from environment variables
     url = os.getenv('WIFI_URL')
+    username = os.getenv('WIFI_USERNAME')
     password = os.getenv('WIFI_PASSWORD')
 
     # Initialize the WebDriver with options to ignore SSL errors
@@ -37,6 +38,17 @@ def connect_to_wifi():
         import threading
         url_check_thread = threading.Thread(target=check_url)
         url_check_thread.start()
+
+        # Wait for the username field to be present
+        try:
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "n_uid")))
+        except Exception as e:
+            print("Error: Username field not found")
+            raise e
+
+        # Enter the username
+        username_field = driver.find_element(By.ID, "n_uid")
+        username_field.send_keys(username)
 
         # Wait for the password field to be present
         try:
