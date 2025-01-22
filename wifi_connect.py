@@ -19,11 +19,25 @@ def connect_to_wifi():
     # Initialize the WebDriver with options to ignore SSL errors
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--headless')  # Run in headless mode
     driver = webdriver.Chrome(options=options)
 
     try:
-        # Navigate to the URL
-        driver.get(url)
+        # Retry logic to handle no initial internet connection
+        max_retries = 5
+        for attempt in range(max_retries):
+            try:
+                # Navigate to the URL
+                driver.get(url)
+                break
+            except Exception as e:
+                print(f"Attempt {attempt + 1} failed: {e}")
+                time.sleep(5)
+        else:
+            print("Failed to load the URL after several attempts")
+            return
 
         # Function to continuously check the URL
         def check_url():
