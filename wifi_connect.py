@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 from dotenv import load_dotenv
+from selenium.common.exceptions import ElementNotInteractableException
 
 # Load environment variables from .env file
 load_dotenv()
@@ -21,7 +22,6 @@ def connect_to_wifi():
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--headless')  # Run in headless mode
     driver = webdriver.Chrome(options=options)
 
     try:
@@ -61,8 +61,12 @@ def connect_to_wifi():
             raise e
 
         # Enter the username
-        username_field = driver.find_element(By.ID, "n_uid")
-        username_field.send_keys(username)
+        try:
+            username_field = driver.find_element(By.ID, "n_uid")
+            username_field.send_keys(username)
+        except ElementNotInteractableException as e:
+            print("Error: Username field not interactable")
+            raise e
 
         # Wait for the password field to be present
         try:
